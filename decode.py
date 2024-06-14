@@ -32,7 +32,7 @@ def read_trie(bits, number_of_channels, colors_cnt=-1):
     return l[0]+r[0], (l[1],r[1])
 
 def read_code(bits, trie):
-    while type(trie) == tuple:
+    while isinstance(trie, tuple):
         trie = trie[bits[0][bits[1]]]
         bits[1] += 1
     return trie

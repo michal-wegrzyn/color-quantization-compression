@@ -4,7 +4,7 @@ from encode import *
 def write_to_file(filename, resolution, data, colors, min_lzss_match_length_bits_cnt=1):
     counter = [0 for _ in range(len(colors))]
     for i in data:
-        if type(i) == int:
+        if isinstance(i, int):
             counter[i] += 1
             
     file_bits = []

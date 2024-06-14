@@ -18,7 +18,7 @@ if not os.path.exists(image_path):
 
 colors = []
 
-if image_path[-5:] != '.pwfc':
+if image_path[-4:] != '.cqc':
     if len(sys.argv) >= 3:
         k = int(sys.argv[2])
     else:
@@ -72,7 +72,9 @@ else:
     width, height = width2, height2
 no_color = [255]*len(colors[0])
 diff = width * height - len(colors)
-print(len(colors))
+print('Number of colors:', len(colors))
+print('Colors:', colors)
+plt.figure(num=image_path)
 if diff > 0:
     plt.scatter(range(len(colors)%width, width), [height-1]*(width-len(colors)%width), marker = 'x', color='red')
 plt.title(f'Palette with {len(colors)} colors of image {image_path}')

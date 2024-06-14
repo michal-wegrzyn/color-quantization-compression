@@ -27,7 +27,7 @@ def color_to_bits(color):
     return bits
 
 def huffmantrie_to_bits(trie, colors):
-    if type(trie) == int:
+    if isinstance(trie, int):
         return [0]+color_to_bits(colors[trie])
     return [1]+huffmantrie_to_bits(trie[0], colors)+huffmantrie_to_bits(trie[1], colors)
 
@@ -52,7 +52,7 @@ def lzss_data_to_bits(data, codes, min_match_length_bits_cnt=1):
     bits = []
     literals = []
     for i in data:
-        if type(i) == int:
+        if isinstance(i, int):
             literals.append(i)
             continue
         if len(literals) > 0:

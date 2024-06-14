@@ -6,7 +6,7 @@ def list_compression(data, window_size, kmp_min_result, min_to_save=5):
     inv_pow_P = [1]
     prefix_hash = [0]
     for i in data:
-        if i >= P:
+        if i >= P-1:
             raise ValueError
         prefix_hash.append((prefix_hash[-1]+(i+1)*pow_P[-1])%MOD)
         pow_P.append(pow_P[-1]*P % MOD)
@@ -18,11 +18,7 @@ def list_compression(data, window_size, kmp_min_result, min_to_save=5):
     res = []
     d = {}
     pos = 0
-    print_pos = 0
     while pos < len(data):
-        if pos - print_pos > len(data)//10:
-            print(pos*100//len(data), '%', sep='')
-            print_pos = pos
         hshkmp = -1
         do_kmp = 0
         if len(data)-pos >= kmp_min_result:
@@ -73,7 +69,7 @@ def list_compression(data, window_size, kmp_min_result, min_to_save=5):
         
         r = res[-1]
         new_pos = pos + 1
-        if type(res[-1]) == tuple:
+        if isinstance(res[-1], tuple):
             new_pos = pos + r[1]
             if r[1] < min_to_save:
                 res.pop()
@@ -97,7 +93,7 @@ def list_compression(data, window_size, kmp_min_result, min_to_save=5):
 def list_decompression(compressed_data):
     data = []
     for i in compressed_data:
-        if type(i) == tuple:
+        if isinstance(i, tuple):
             for _ in range(i[1]):
                 data.append(data[-i[0]])
         else:

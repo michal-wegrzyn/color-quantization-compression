@@ -21,12 +21,12 @@ if len(sys.argv) >= 3:
 else:
     k = int(input('Number of colors: '))
 
-if len(sys.argv) >= 4:
-    min_match_length = int(sys.argv[3])
-else:
-    min_match_length = int(input('Min match length: '))
+if k > 1024:
+    print('Maximum number of colors is 1024')
+    exit()
 
-temp  = min_match_length
+lzss_min_match_length = 4
+temp  = lzss_min_match_length
 min_match_length_bits_cnt = 0
 while temp > 0:
     temp //= 2
@@ -45,10 +45,10 @@ kmeans.fit(flatten_pixels)
 kmeans.cluster_centers_ = np.round(kmeans.cluster_centers_)
 labels = kmeans.predict(flatten_pixels)
 
-compressed = list_compression([int(i) for i in labels], 4096, 64, min_match_length)
+compressed = list_compression([int(i) for i in labels], 4096, 64, lzss_min_match_length)
 
 for i in range(len(flatten_pixels)):
     flatten_pixels[i] = kmeans.cluster_centers_[labels[i]]
 
-new_image_path = Path(image_path).with_suffix('.pwfc')
+new_image_path = Path(image_path).with_suffix('.cqc')
 write_to_file(new_image_path, (width, height),compressed, kmeans.cluster_centers_, min_match_length_bits_cnt)
